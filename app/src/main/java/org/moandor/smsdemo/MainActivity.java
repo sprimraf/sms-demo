@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void sendMessage(String phone, String text) {
         SmsManager manager = SmsManager.getDefault();
-        manager.sendTextMessage(phone, null, text, null, null);
+        List<String> fragments = manager.divideMessage(text);
+        for (String fragment : fragments) {
+            manager.sendTextMessage(phone, null, fragment, null, null);
+        }
     }
 }
